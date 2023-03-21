@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.5),
-    on Tue Mar 21 22:59:31 2023
+    on Tue Mar 21 23:08:00 2023
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -25,7 +25,6 @@ from numpy.random import random, randint, normal, shuffle, choice as randchoice
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
-import psychopy.iohub as io
 from psychopy.hardware import keyboard
 
 
@@ -56,7 +55,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expName, expInfo['participant
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='/Users/strongway/LRZ Sync+Share/_git/discue_search/stress_search_lastrun.py',
+    originPath='/Users/strongway/LRZ Sync+Share/_git/discue_search/stress_search_without_eyelink_lastrun.py',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -84,33 +83,7 @@ else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
 # --- Setup input devices ---
 ioConfig = {}
-
-# Setup eyetracking
-ioConfig['eyetracker.hw.sr_research.eyelink.EyeTracker'] = {
-    'name': 'tracker',
-    'model_name': 'EYELINK 1000 DESKTOP',
-    'simulation_mode': False,
-    'network_settings': '100.1.1.1',
-    'default_native_data_file_name': 'EXPFILE',
-    'runtime_settings': {
-        'sampling_rate': 1000.0,
-        'track_eyes': 'RIGHT_EYE',
-        'sample_filtering': {
-            'sample_filtering': 'FILTER_LEVEL_2',
-            'elLiveFiltering': 'FILTER_LEVEL_OFF',
-        },
-        'vog_settings': {
-            'pupil_measure_types': 'PUPIL_AREA',
-            'tracking_mode': 'PUPIL_CR_TRACKING',
-            'pupil_center_algorithm': 'ELLIPSE_FIT',
-        }
-    }
-}
-ioSession = '1'
-if 'session' in expInfo:
-    ioSession = str(expInfo['session'])
-ioServer = io.launchHubServer(window=win, experiment_code='stress', session_code=ioSession, datastore_name=filename, **ioConfig)
-eyetracker = ioServer.getDevice('tracker')
+ioSession = ioServer = eyetracker = None
 
 # create a default keyboard (e.g. to check for escape)
 defaultKeyboard = keyboard.Keyboard(backend='ptb')
@@ -212,8 +185,6 @@ key_j = visual.TextStim(win=win, name='key_j',
     color='white', colorSpace='rgb', opacity=None, 
     languageStyle='LTR',
     depth=-7.0);
-
-# --- Initialize components for Routine "et_record_start" ---
 
 # --- Initialize components for Routine "cue" ---
 # Run 'Begin Experiment' code from cue_init
@@ -327,8 +298,6 @@ block_info = visual.TextStim(win=win, name='block_info',
     languageStyle='LTR',
     depth=-1.0);
 key_block = keyboard.Keyboard()
-
-# --- Initialize components for Routine "et_record_stop" ---
 
 # --- Initialize components for Routine "finish" ---
 end = visual.TextStim(win=win, name='end',
@@ -692,58 +661,6 @@ for thisComponent in instruction3Components:
 # the Routine "instruction3" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# --- Prepare to start Routine "et_record_start" ---
-continueRoutine = True
-routineForceEnded = False
-# update component parameters for each repeat
-# keep track of which components have finished
-et_record_startComponents = []
-for thisComponent in et_record_startComponents:
-    thisComponent.tStart = None
-    thisComponent.tStop = None
-    thisComponent.tStartRefresh = None
-    thisComponent.tStopRefresh = None
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-# reset timers
-t = 0
-_timeToFirstFrame = win.getFutureFlipTime(clock="now")
-frameN = -1
-
-# --- Run Routine "et_record_start" ---
-while continueRoutine:
-    # get current time
-    t = routineTimer.getTime()
-    tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # check for quit (typically the Esc key)
-    if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        routineForceEnded = True
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in et_record_startComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# --- Ending Routine "et_record_start" ---
-for thisComponent in et_record_startComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "et_record_start" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1.0, method='sequential', 
     extraInfo=expInfo, originPath=-1,
@@ -776,9 +693,7 @@ for thisTrial in trials:
     if cue_validity == 1: 
         # point to distractor location
         line.end = [CoordsX[pos2]/3.0, CoordsY[pos2]/3.0]
-        
-    ioServer.sendMessageEvent('Cue begin t%i' %(trials.thisN))
-    eyetracker.sendMessage('Cue begin t%i' %(trials.thisN))
+    
     
     fixation_cross.setContrast(1.0)
     # keep track of which components have finished
@@ -927,6 +842,8 @@ for thisTrial in trials:
         else:
             items[i]= visual.Polygon(win = win, edges = 4, size = dw,lineWidth = lw)
             items[i].edges = shape
+        if shape == 3: #triangle, increase the area a bit
+            items[i].size = dw * 1.02
         if singleton == 1 and i == 1: # distractor singleton
             items[i].fillColor = dis_col
         else:
@@ -956,9 +873,6 @@ for thisTrial in trials:
             lines[i].ori = randchoice([0, 90])
         lines[i].setAutoDraw(True)
         
-        
-    ioServer.sendMessageEvent('Display onset t%i' %(trials.thisN))
-    eyetracker.sendMessage('Display onset t%i' %(trials.thisN))
     
     search_response.keys = []
     search_response.rt = []
@@ -1040,9 +954,6 @@ for thisTrial in trials:
         items[i].setAutoDraw(False)    
         lines[i].setAutoDraw(False)
     win.flip()
-    
-    ioServer.sendMessageEvent('Display offset t%i' %(trials.thisN))
-    eyetracker.sendMessage('Display offset t%i' %(trials.thisN))
     
     if search_response.corr == 1:
         corr_trials = corr_trials +1
@@ -1194,58 +1105,6 @@ for thisTrial in trials:
     
 # completed 1.0 repeats of 'trials'
 
-
-# --- Prepare to start Routine "et_record_stop" ---
-continueRoutine = True
-routineForceEnded = False
-# update component parameters for each repeat
-# keep track of which components have finished
-et_record_stopComponents = []
-for thisComponent in et_record_stopComponents:
-    thisComponent.tStart = None
-    thisComponent.tStop = None
-    thisComponent.tStartRefresh = None
-    thisComponent.tStopRefresh = None
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-# reset timers
-t = 0
-_timeToFirstFrame = win.getFutureFlipTime(clock="now")
-frameN = -1
-
-# --- Run Routine "et_record_stop" ---
-while continueRoutine:
-    # get current time
-    t = routineTimer.getTime()
-    tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # check for quit (typically the Esc key)
-    if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        routineForceEnded = True
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in et_record_stopComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# --- Ending Routine "et_record_stop" ---
-for thisComponent in et_record_stopComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "et_record_stop" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
 
 # --- Prepare to start Routine "finish" ---
 continueRoutine = True
