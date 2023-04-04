@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.5),
-    on Tue Mar 21 23:08:00 2023
+    on Tue Apr  4 11:51:11 2023
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -106,7 +106,7 @@ text_1 = visual.TextStim(win=win, name='text_1',
     depth=-1.0);
 space0 = keyboard.Keyboard()
 text_cont = visual.TextStim(win=win, name='text_cont',
-    text='Press SPACE to continue ...',
+    text='Press SPACEBAR to continue ...',
     font='Arial',
     units='deg', pos=(0, -6), height=1.0, wrapWidth=40.0, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
@@ -131,7 +131,7 @@ text_intro = visual.TextStim(win=win, name='text_intro',
     depth=-1.0);
 space_key = keyboard.Keyboard()
 text_cont2 = visual.TextStim(win=win, name='text_cont2',
-    text='Press SPACE to continue ...',
+    text='Press SPACEBAR to continue ...',
     font='Arial',
     units='deg', pos=(0, -6), height=1.0, wrapWidth=40.0, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
@@ -153,7 +153,7 @@ diamond2 = visual.Rect(
     lineWidth=1.0,     colorSpace='rgb',  lineColor=[1.000, 0.2491, -1.0000], fillColor=[1.000, 0.2491, -1.0000],
     opacity=None, depth=-2.0, interpolate=True)
 Task = visual.TextStim(win=win, name='Task',
-    text="Your task is to identify the orientation of the line inside the diamond and make a response by pressing 'f' for horizontal and 'j' for vertical. Please ignore any colour distractor that may appear on the screen. \n\nPress SPACE to start. ",
+    text="Your task is to identify the orientation of the line inside the diamond and make a response by pressing 'left arrow key' for horizontal and 'up arrow key' for vertical. Please ignore any colour distractor that may appear on the screen. \n\nPress SPACEBAR to start. ",
     font='Arial',
     pos=(0, 6), height=1.0, wrapWidth=40.0, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
@@ -291,7 +291,7 @@ corr_trials = 0
 block_break = False
 key_dur = 1.0 + random()/2.0
 block_info = visual.TextStim(win=win, name='block_info',
-    text='Take a rest',
+    text='Take a rest. \n\nPlease remember to focus on the fixation cross during the cue display.\n\nPress SPACEBAR to continue ...',
     font='Arial',
     pos=(0, 0), height=1.0, wrapWidth=40.0, ori=0.0, 
     color='white', colorSpace='rgb', opacity=None, 
@@ -1058,7 +1058,7 @@ for thisTrial in trials:
                 key_block.frameNStop = frameN  # exact frame index
                 key_block.status = FINISHED
         if key_block.status == STARTED and not waitOnFlip:
-            theseKeys = key_block.getKeys(keyList=['y','n','left','right','space'], waitRelease=False)
+            theseKeys = key_block.getKeys(keyList=['space'], waitRelease=False)
             _key_block_allKeys.extend(theseKeys)
             if len(_key_block_allKeys):
                 key_block.keys = _key_block_allKeys[-1].name  # just the last key pressed
